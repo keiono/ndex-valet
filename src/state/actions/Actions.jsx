@@ -1,0 +1,4 @@
+export const PHASE_SWITCH = "PHASE_SWITCH"
+export const HOVERING = "HOVERING"
+export const UPDATE_QUERY = "UPDATE_QUERY"
+export const UPDATE_RESULTS = "UPDATE_RESULTS"

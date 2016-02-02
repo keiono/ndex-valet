@@ -1,0 +1,25 @@
+body {
+   font-family: 'Raleway', sans-serif;
+   font-weight: 300;
+   background-color: grey;
+}
+
+button:focus {
+  outline:0;
+}
+
+textarea:focus {
+  outline:0;
+}
+
+#frame {
+  border-radius: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -400px;
+  margin-left: -800px;
+  width: 1600px;
+  height: 800px;
+}
+//900/1350
