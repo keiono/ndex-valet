@@ -1,4 +1,4 @@
-import { PHASE_SWITCH, HOVERING, UPDATE_QUERY, UPDATE_RESULTS } from "./Actions.jsx"
+import { PHASE_SWITCH, HOVERING, UPDATE_QUERY, UPDATE_RESULTS, SWITCH_VIEW_MODE } from "./Actions.jsx"
 
 
 export function phaseSwitch(nextPhase) {
@@ -23,10 +23,19 @@ export function updateQuery(newText) {
 }
 
 export function updateResults(newResults) {
+    console.log("!!!!!!!!!RES")
   return {
     type: UPDATE_RESULTS,
     results: newResults
   }
+}
+
+export function switchViewMode(viewMode) {
+    console.log("!!!!!!!!! viewModeChange")
+    return {
+        type: SWITCH_VIEW_MODE,
+        viewMode: viewMode
+    }
 }
 
 export function searchNdex(dispatch, query) {
@@ -40,4 +49,9 @@ export function searchNdex(dispatch, query) {
       dispatch(updateResults(client.responseText))
     else
       dispatch(updateResults(""))
+}
+
+export function visualizeDetails(dispatch, viewMode) {
+    console.log('View Mode: ' + viewMode);
+    dispatch(switchViewMode(viewMode))
 }

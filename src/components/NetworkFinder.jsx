@@ -22,7 +22,7 @@ class NetworkFinder extends React.Component {
       <div style={this.frameStyle}>
         <ToolBar/>
         <SearchWindow query={this.props.query} updateQuery={this.props.updateQuery} searchNdex={this.props.searchNdex}/>
-        <ResultsWindow results={this.props.results}/>
+        <ResultsWindow results={this.props.results} viewMode={this.props.viewMode} visualizeDetails={this.props.visualizeDetails} />
       </div>
     )
   }

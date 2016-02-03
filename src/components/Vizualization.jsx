@@ -7,6 +7,9 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableHeader from 'material-ui/lib/table/table-header';
 import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
+import Colors from 'material-ui/lib/styles/colors';
+
+import {TABLE_VIEW, DETAILS_VIEW} from "../state/actions/Actions.jsx"
 
 
 class Vizualization extends React.Component {
@@ -17,21 +20,39 @@ class Vizualization extends React.Component {
 
     frameStyle() {
         return {
-            backgroundColor: '#FAFAFA',
             position: 'absolute',
             top: '22%',
             bottom: '2%',
             left: '1%',
             right: '1%',
-            padding: '0.5em'
+            padding: '0.1em',
+            overflow: 'auto'
         }
     }
 
-    render() {
-        console.log("---------- render2! ------------")
-        console.log(this.props.results)
+    columnStyle() {
+        return {
+            textAlign: 'left',
+            width: '4em'
+        }
+    }
 
-        console.log(typeof this.props.results);
+    headerStyle() {
+        return {
+            fontWeight: 700,
+            textAlign: 'left',
+            width: '5em'
+        }
+    }
+
+    switchView(event) {
+        let networkId = this.networkList[event[0]]['externalId']
+        console.log(networkId);
+
+        this.props.visualizeDetails(DETAILS_VIEW)
+    };
+
+    render() {
 
         if(this.props.results === '') {
             return (
@@ -40,35 +61,51 @@ class Vizualization extends React.Component {
             )
         }
 
-        let networkList = JSON.parse(this.props.results);
-        console.log(networkList);
+        this.networkList = JSON.parse(this.props.results);
+
+        console.log(this.networkList);
+
+        this.state = {
+            fixedHeader: true,
+            selectable: true,
+            adjustForCheckbox: false,
+            displayRowCheckbox: false,
+            displaySelectAll: false
+        };
 
         return (
             <div style={this.frameStyle()}>
-                <Table>
-                    <TableHeader>
+                <Table
+                    fixedHeader={this.state.fixedHeader}
+                    selectable={this.state.selectable}
+                    onRowSelection={this.switchView.bind(this)}
+                >
+                    <TableHeader
+                        adjustForCheckbox={this.state.adjustForCheckbox}
+                        displaySelectAll={this.state.displaySelectAll}
+                        style={{textAlign: 'right'}}
+                    >
                         <TableRow>
-                            <TableHeaderColumn>NDEx ID</TableHeaderColumn>
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
+                            <TableHeaderColumn style={{width: '4em', textAlign: 'left'}}>Matches</TableHeaderColumn>
+                            <TableHeaderColumn style={{textAlign: 'left'}}>Name</TableHeaderColumn>
+                            <TableHeaderColumn style={{textAlign: 'left'}}>Nodes / Edges</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
-                        {networkList.map( row => (
-                            <TableRow selected={false}>
-                                <TableRowColumn>{row.externalId}</TableRowColumn>
+
+                    <TableBody
+                        displayRowCheckbox={this.state.displayRowCheckbox}
+                    >
+                        {this.networkList.map( row => (
+                            <TableRow
+                            >
+                                <TableRowColumn
+                                    style={this.columnStyle()}>10/33</TableRowColumn>
                                 <TableRowColumn>{row.name}</TableRowColumn>
-                                <TableRowColumn>{row.status}</TableRowColumn>
+                                <TableRowColumn>{row.nodeCount} / {row.edgeCount}</TableRowColumn>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-
-                <RaisedButton
-                    label="REACT!"
-                    primary={true}
-                    onTouchTap={this.handleTouchTap}
-                />
             </div>
         )
     }
